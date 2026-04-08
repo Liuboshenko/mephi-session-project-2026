@@ -189,3 +189,7 @@
   189  firewall-cmd --permanent --add-service=http
   190  firewall-cmd --reload
   191  history > ~/project_history.txt
+  192  nginx -t
+  193  getcap /usr/sbin/tcpdump
+  194  authselect opt-out
+  195  history > ~/project_history.txt
