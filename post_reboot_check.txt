@@ -1,0 +1,117 @@
+root@mephi-2026:~# cat ~/post_reboot_check.txt
+=== Post-reboot verification ===
+Date: Ср 08 апр 2026 18:58:33 IDT
+
+=== hostname ===
+mephi-2026.domain.local
+
+=== ip addr show enp0s3 ===
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:18:78:37 brd ff:ff:ff:ff:ff:ff
+    altname enx080027187837
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global noprefixroute enp0s3
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4dad:e141:6fe5:7deb/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+
+=== ip route ===
+default via 192.168.1.1 dev enp0s3 proto static metric 100 
+192.168.1.0/24 dev enp0s3 proto kernel scope link src 192.168.1.100 metric 100 
+
+=== df -h /data/mephi-web ===
+Файловая система Размер Использовано  Дост Использовано% Cмонтировано в
+/dev/sdb1          2,0G         548K  1,9G            1% /data/mephi-web
+
+=== cat /etc/fstab ===
+
+#
+# /etc/fstab
+# Created by anaconda on Tue Apr  7 07:48:44 2026
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk/'.
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info.
+#
+# After editing this file, run 'systemctl daemon-reload' to update systemd
+# units generated from this file.
+#
+UUID=7edd3a65-2f2f-4983-8748-6db48852b88e / xfs defaults 0 0
+UUID=78171e8a-1b53-417d-adab-40360d225299 /boot xfs defaults 0 0
+LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 2
+
+=== systemctl status nginx ===
+● nginx.service - The nginx HTTP and reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: active (running) since Wed 2026-04-08 18:50:30 IDT; 8min ago
+ Invocation: 1f9ebdcfc52b48249faaac35e459ee02
+    Process: 929 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+    Process: 939 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+    Process: 969 ExecStart=/usr/sbin/nginx (code=exited, status=0/SUCCESS)
+   Main PID: 980 (nginx)
+      Tasks: 5 (limit: 9462)
+     Memory: 6.7M (peak: 7.2M)
+        CPU: 157ms
+     CGroup: /system.slice/nginx.service
+             ├─980 "nginx: master process /usr/sbin/nginx"
+             ├─981 "nginx: worker process"
+             ├─982 "nginx: worker process"
+             ├─983 "nginx: worker process"
+             └─984 "nginx: worker process"
+
+апр 08 18:50:30 mephi-2026.domain.local systemd[1]: Starting nginx.service - The nginx HTTP and reverse proxy server...
+апр 08 18:50:30 mephi-2026.domain.local nginx[939]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+апр 08 18:50:30 mephi-2026.domain.local nginx[939]: nginx: configuration file /etc/nginx/nginx.conf test is successful
+апр 08 18:50:30 mephi-2026.domain.local systemd[1]: Started nginx.service - The nginx HTTP and reverse proxy server.
+
+=== curl http://localhost ===
+Hello from Student: M255604
+
+=== curl http://192.168.1.100 ===
+Hello from Student: M255604
+
+=== getenforce ===
+Enforcing
+
+=== ls -Zd /data/mephi-web ===
+system_u:object_r:httpd_sys_content_t:s0 /data/mephi-web
+
+=== getcap /usr/sbin/tcpdump ===
+/usr/sbin/tcpdump cap_net_admin,cap_net_raw=ep
+
+=== ls -ld /data/mephi-web ===
+drwxrwsr-x. 3 mephi-admin mephi-devs 4096 апр  8 12:56 /data/mephi-web
+
+=== id mephi-admin ===
+uid=5506(mephi-admin) gid=5506(mephi-admin) группы=5506(mephi-admin),10(wheel),5507(mephi-devs)
+
+=== getent group mephi-devs ===
+mephi-devs:x:5507:mephi-admin
+
+=== cat /etc/denied_users ===
+root
+
+=== grep PermitRootLogin /etc/ssh/sshd_config ===
+PermitRootLogin no
+# the setting of "PermitRootLogin prohibit-password".
+
+=== sudo -u mephi-admin tcpdump --help 2>&1 | head -3 ===
+tcpdump version 4.99.6
+libpcap version 1.10.5 (with TPACKET_V3)
+OpenSSL 3.5.1 1 Jul 2025
+
+=== firewall-cmd --list-services ===
+cockpit dhcpv6-client http ssh
+
+=== lsblk ===
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sda               8:0    0 40,5G  0 disk 
+├─sda1            8:1    0    1M  0 part 
+├─sda2            8:2    0    2G  0 part /boot
+└─sda3            8:3    0 38,5G  0 part 
+  └─fedora-root 252:0    0   15G  0 lvm  /
+sdb               8:16   0    2G  0 disk 
+└─sdb1            8:17   0    2G  0 part /data/mephi-web
+zram0           251:0    0  7,7G  0 disk [SWAP]
+root@mephi-2026:~# 
+
