@@ -1,0 +1,191 @@
+    1  history
+    2  uname -a
+    3  lsb_release -a
+    4  cat /etc/os-release
+    5  ip add
+    6  ping google
+    7  ping google.com
+    8  ps aux
+    9  ss --version
+   10  ss --tulpen
+   11  ss -tulpen
+   12  getfacl --version
+   13  setfact --version
+   14  setfacl --version
+   15  history
+   16  cat /etc/resolv.conf 
+   17  groupadd project
+   18  cat /etc/group
+   19  groupadd -g 4444 curators
+   20  useradd -u 5501 -m -s /bin/bash user1
+   21  useradd -u 5502 -m -s /bin/bash user2
+   22  useradd -u 5503 -m -s /bin/bash user3
+   23  usermod -aG project user1
+   24  usermod -aG project user2
+   25  usermod -aG project user3
+   26  history
+   27  useradd -m -s /bin/bash curator1
+   28  useradd -m -s /bin/bash curator2
+   29  usermod -aG curators curator1
+   30  usermod -aG curators curator2
+   31  cat /etc/passwd
+   32  groups user1
+   33  groups user2
+   34  groups user3
+   35  groups curator1
+   36  groups curator2
+   37  history
+   38  mkdir /dir-M255604
+   39  chown root:project /dir-M255604
+   40  chmod 700 /dir-M255604
+   41  ls -lah /dir-M255604/
+   42  setfacl -m g:project:rwx /dir-M255604
+   43  setfacl -m g:curators:rx /dir-M255604
+   44  setfacl -m o::--- /dir-M255604
+   45  setfacl -m d:g:project:rwx /dir-M255604
+   46  setfacl -m d:g:curators:rx /dir-M255604
+   47  setfacl -m d:o::--- /dir-M255604
+   48  history
+   49  setfacl -m m::rwx /dir-M255604
+   50  setfacl -m d:m::rwx /dir-M255604
+   51  getfacl /dir-M25560
+   52  getfacl /dir-M255604
+   53  echo "user1:user1" | chpasswd
+   54  echo "user2:user2" | chpasswd
+   55  echo "user3:user3" | chpasswd
+   56  echo "curator1:curator1" | chpasswd
+   57  echo "curator2:curator2" | chpasswd
+   58  getfacl /dir-M255604
+   59  cat cat /etc/passwd
+   60  cat /etc/group
+   61  ls -l /dir-M255604/
+   62  su - user1 -c "touch /dir-M255604/file_from_user1.txt && echo 'Содержимое от user1' > /dir-M255604/file_from_user1.txt"
+   63  su - user2 -c "ls -l /dir-M255604/ && echo 'Добавлено user2' >> /dir-M255604/file_from_user1.txt && cat /dir-M255604/file_from_user1.txt"
+   64  su - curator1 -c "ls -l /dir-M255604/ && cat /dir-M255604/file_from_user1.txt && echo 'Попытка записи от куратора' >> /dir-M255604/file_from_user1.txt"
+   65  history
+   66  # Создаём отчёт
+   67  history > ~/hw_report.txt
+   68  echo -e "\n=== /etc/passwd ===\n" >> ~/hw_report.txt
+   69  cat /etc/passwd >> ~/hw_report.txt
+   70  echo -e "\n=== /etc/group ===\n" >> ~/hw_report.txt
+   71  cat /etc/group >> ~/hw_report.txt
+   72  cat ~/hw_report.txt 
+   73  ip link show
+   74  ip add
+   75  lsblk
+   76  getenforce
+   77  shutdown now
+   78  ip add
+   79  shutdown now
+   80  history
+   81  nmcli connection add con-name mephi-static ifname enp0s3 type ip4 192.168.1.100/24 gw4 192.168.1.1
+   82  nmcli connection add con-name mephi-static ifname enp0s3 type ethernet ip4 192.168.1.100/24 gw4 192.168.1.1
+   83  ip add
+   84  nmcli connection modify mephi-static ipv4.dns.8.8.8.8
+   85  nmcli connection modify mephi-static ipv4.dns 8.8.8.8
+   86  nmcli connection modify mephi-static ipv4.method manual
+   87  nmcli connection up mephi-static
+   88  ping -c 2 192.168.1.1
+   89  pidasf
+   90  ping 8.8.8.8
+   91  ping -c 2 192.168.1.1
+   92  ping 8.8.8.8
+   93  ping -c 2 192.168.1.1
+   94  ping 8.8.8.8
+   95  ping 192.168.1.1
+   96  ip add
+   97  ping 192.168.1.1
+   98  ping 8.8.8.8
+   99  nmcli connection show mephi-static
+  100  ip link show
+  101  ip add
+  102  history
+  103  exit
+  104  history
+  105  ip add
+  106  hostname
+  107  cat /etc/sysconfig/network-scripts/
+  108  ls -lah /etc/sysconfig/network-scripts/
+  109  hostnamectl.
+  110  hostnamectl status
+  111  hostnamectl set-hostname mephi-2026.domain.local
+  112  exit
+  113  hostname
+  114  hostnamectl status
+  115  arp
+  116  ip route
+  117  ping -c 4 8.8.8.8
+  118  ping -c 4 192.168.1.1
+  119  ip route > /tmp/network_check.txt
+  120  ping -c 4 8.8.8.8 >> /tmp/network_check.txt
+  121  ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+  122  cat /tmp/network_check.txt
+  123  hostname
+  124  dnf install -y nginx tcpdump libcap-ng-utils
+  125  dnf download tcpdump --destdir /tmp
+  126  ls /tmp/tcpdump*.rpm
+  127  rpm -ivh --force /tmp/tcpdump*.rpm
+  128  lsblk
+  129  fdisk /dev/sdb
+  130  mkfs.ext4 -L MEPHI_DATA /dev/sdb1
+  131  mkdir -p /data/mephi-web
+  132  echo 'LABEL=MEPHI_DATA /data/mephi-web ext4 defaults 0 2' >> /etc/fstab
+  133  lsblk
+  134  mount -a
+  135  systemctl daemon-reload
+  136  mount -a
+  137  df -h /data/mephi-web
+  138  systemctl enable --now nginx
+  139  systemctl status nginx
+  140  journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+  141  cat /tmp/nginx_recent_logs.txt
+  142  history
+  143  useradd mephi-admin
+  144  echo 'mephi-admin:P@ssw0rd2026' | chpasswd
+  145  groupadd mephi-devs
+  146  usermod -aG mephi-devs mephi-admin
+  147  chown mephi-admin:mephi-devs /data/mephi-web
+  148  chmod 2775 /data/mephi-web
+  149  ls -ld /data/mephi-web
+  150  cat /etc/passwd
+  151  groups
+  152  getent group
+  153  id mephi-admin
+  154  ls -ld /data/mephi-web
+  155  semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+  156  restorecon -Rv /data/mephi-web
+  157  ls -Zd /data/mephi-web
+  158  setcap cap_net_admin,cap_net_raw=ep /usr/sbin/tcpdump
+  159  getcap /usr/sbin/tcpdump
+  160  sudo -u mephi-admin tcpdump --help
+  161  history
+  162  stat /usr/sbin/tcpdump | grep Access
+  163  ls -l /usr/sbin/tcpdump
+  164  usermod -aG wheel mephi-admin
+  165  systemctl status sshd
+  166  echo 'root' > /etc/denied_users
+  167  sed -i '/^#%PAM-1.0/a auth    required    pam_listfile.so item=user sense=deny file=/etc/denied_users onerr=succeed' /etc/pam.d/system-auth
+  168  sed -i 's/^#*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+  169  grep -q '^PermitRootLogin' /etc/ssh/sshd_config || echo 'PermitRootLogin no' >> /etc/ssh/sshd_config
+  170  systemctl restart sshd
+  171  grep PermitRootLogin /etc/ssh/sshd_config
+  172  head -5 /etc/pam.d/system-auth
+  173  cat /etc/denied_users
+  174  head -10 /etc/pam.d/system-auth
+  175  head -10 /etc/pam.d/password-auth
+  176  head -10 /etc/pam.d/sshd
+  177  head -10 /etc/pam.d/login
+  178  sed -i '/^auth.*pam_env.so/i auth    required    pam_listfile.so item=user sense=deny file=/etc/denied_users onerr=succeed' /etc/pam.d/system-auth
+  179  sed -i '/^auth.*pam_env.so/i auth    required    pam_listfile.so item=user sense=deny file=/etc/denied_users onerr=succeed' /etc/pam.d/password-auth
+  180  head -8 /etc/pam.d/system-auth
+  181  head -8 /etc/pam.d/password-auth
+  182  grep -n 'root' /etc/nginx/nginx.conf
+  183  sed -i 's|root         /usr/share/nginx/html;|root         /data/mephi-web;|' /etc/nginx/nginx.conf
+  184  grep -n 'root' /etc/nginx/nginx.conf
+  185  sudo -u mephi-admin bash -c 'echo "Hello from Student: M255604" > /data/mephi-web/index.html'
+  186  systemctl restart nginx
+  187  curl http://localhost
+  188  curl http://192.168.1.100
+  189  firewall-cmd --permanent --add-service=http
+  190  firewall-cmd --reload
+  191  history > ~/project_history.txt
